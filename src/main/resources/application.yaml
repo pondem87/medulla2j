@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: medulla2j
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medulla2j_db
+    username: medulla2j_app
+    password: medulla2jdevdbpassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
