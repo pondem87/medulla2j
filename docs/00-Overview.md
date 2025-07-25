@@ -17,7 +17,8 @@ in fact data loss will merely be an inconvenience.
 📚 Docs:
 - [Overview](00-Overview.md)
 - [Requirements](01-Requirements.md)
-- [Architecture](02-Architecture.md)
-- [Tech Stack](03-Tech-Stack.md)
-- [Design Decisions](04-Decisions.md)
-- [Roadmap](05-Roadmap.md)
+- [Analysis and design](02-Analysis-and-design.md)
+- [Architecture](03-Architecture.md)
+- [Tech Stack](04-Tech-Stack.md)
+- [Design Decisions](05-Decisions.md)
+- [Roadmap](06-Roadmap.md)

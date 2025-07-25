@@ -1,0 +1,43 @@
+@startuml
+
+title llm management domain
+
+'=== ENTITIES ==='
+class LLM {
+    -String modelName
+    -String provider
+    -LLMIOMode[] inputModes
+    -LLMIOMode[] outputModes
+}
+
+
+
+class ClientLLMUsage {
+    -UUID clientId
+    -Integer inputTokens
+    -Integer outputTokens
+    -Date date
+}
+
+note right of ClientLLMUsage::date
+Only one usage entry per client per date.
+end note
+
+'=== VALUE OBJECTS ===
+class LLMIOMode {
+    -LLMIOValue value
+    -Boolean validate(String mode)
+    {static}+LLMIOMode create(String mode)
+}
+
+enum LLMIOValue {
+    TEXT
+    IMAGE
+    AUDIO
+    VIDEO
+}
+
+'=== ASSOCIATIONS ===
+LLM "1" -- "..*" ClientLLMUsage
+
+@enduml

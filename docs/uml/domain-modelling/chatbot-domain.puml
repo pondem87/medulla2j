@@ -1,0 +1,57 @@
+@startuml
+title chatbot domain
+
+'=== Entities ===
+class Client {
+    -PhoneNumber phoneNumber
+    -Instant timeCreated
+}
+
+class Conversation {
+    -Instant timeCreated
+}
+
+class Message {
+    -String messageContent
+    -Instant timeCreated
+}
+
+'=== Entities ===
+class ClientPreferences {
+    -UUID modelId
+    -ImageQuality imageQuality
+}
+
+'=== VALUE OBJECTS ===
+class PhoneNumber {
+    -String value
+    -Boolean validate(String phoneNumber)
+    {static}+PhoneNumber create(String phoneNumber)
+}
+
+class ImageQuality {
+    -String value
+    -Boolean validate(String quality)
+    {static}+ImageQuality create(String quality)
+}
+
+'=== SERVICES ===
+class ChatbotService {
+    +getConversation(UUID clientId)
+}
+
+note right of ChatbotService::getConversation
+Retrieves a Conversation or
+creates one if none exists
+or the current one has expired
+end note
+
+'=== ASSOCIATIONS ===
+Client "1" -- "..*" Conversation
+Client "1" -- "1" ClientPreferences
+Conversation "1" -- "..*" Message
+
+ChatbotService ..> Client : uses
+ChatbotService ..> Conversation : creates/retrieves
+
+@enduml
