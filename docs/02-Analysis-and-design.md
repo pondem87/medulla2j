@@ -22,7 +22,7 @@ Domain identification
 - Entities: llm, client llm usage
 - Value object: llm input output mode
 
-![diagram](uml/domain-modelling/images/ll_management_domain.png)
+![diagram](uml/domain-modelling/images/llm_management_domain.png)
 * [puml file](uml/domain-modelling/llm-domain.puml)
 
 ### Subscription and billing
