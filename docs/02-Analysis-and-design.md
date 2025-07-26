@@ -27,8 +27,11 @@ Domain identification
 
 ### Subscription and billing
 
-- Entities: subscription plan, subscription, payment, currency
+- Entities: subscription plan, subscription, payment, currency, model limits
 - Value objects: currency iso
+
+![diagram](uml/domain-modelling/images/subscription_domain.png)
+* [puml file](uml/domain-modelling/images/subscription_domain.png)
 
 ### Administration
 

@@ -1,0 +1,115 @@
+@startuml
+title subscription domain
+
+class Subscription {
+    -UUID clientId
+    -Instant timeCreated
+    -Instant timeActivated
+    -Boolean active
+}
+
+class SubscriptionPlan {
+    -String name
+    -String description
+    -Currency currency
+    -BigDecimal priceAmount
+    -ModelLimits[] availableModels
+}
+
+class ModelLimits {
+    -UUID modelId
+    -Integer maxDailyInputTokens
+    -Integer maxDailyOutputTokens
+}
+
+class Payment {
+    -String provider
+    -Instant timeCreated
+    -Instant timeLastUpdated
+    -Currency currency
+    -BigDecimal amountPaid
+    -PaymentStatus status
+}
+
+note right of Payment::provider
+payment gateway
+integration provider
+end note
+
+class Currency {
+    -String currencyName
+    -CurrencyIso isoCode
+}
+
+class ExchangeRate {
+    -UUID id
+    -Currency sourceCurrency
+    -Currency targetCurrency
+    -BigDecimal rate
+    -Instant timeRecorded
+}
+
+'=== VALUE OBJECTS ===
+class CurrencyIso {
+    -String value
+    -Boolean validate(String isoCode)
+    {static}+CurrencyIso create(String isoCode)
+}
+
+class PaymentStatus {
+    -PaymentStatusCode value
+    -PaymentStatusCode validate(String status)
+    {static}+PaymentStatus create(String status)
+}
+
+Enum PaymentStatusCode {
+    PAID
+    PENDING
+    INITIATED
+    CANCELLED
+    FAILED
+    REFUNDED
+}
+
+'=== SERVICES ===
+class SubscriptionService {
+    +initializePayment(UUID clientId, String currencyIsoCode, BigDecimal amount, String provider)
+    +updatePayment(UUID paymentId, PaymentStatusCode status)
+}
+
+note right of SubscriptionService::initializePayment
+should handle creation of all objects related to payment
+end note
+note right of SubscriptionService::updatePayment
+should handle effects of payment status update such as
+activating the subscription
+end note
+
+class CurrencyService {
+    +BigDecimal convert(CurrencyIso source, CurrencyIso target, BigDecimal amount)
+}
+
+'=== ASSOCIATIONS ===
+SubscriptionPlan "1" -- "..*" ModelLimits: as availableModels
+Subscription "1" -- "1" SubscriptionPlan
+Subscription "1" -- "1" Payment
+Payment "1" -- "1" Currency: as currency
+SubscriptionPlan "1" -- "1" Currency: as currency
+ExchangeRate "1" -- "1" Currency: as sourceCurrency
+ExchangeRate "1" -- "1" Currency: as targetCurrency
+
+'=== EXTERNAL REFERENCES ===
+class Client {
+    <<external>>
+    +UUID id
+}
+
+class LLM {
+    <<external>>
+    +UUID id
+}
+
+Subscription ..> Client : referenced by clientId
+ModelLimits ..> LLM : referenced by modelId
+
+@enduml

@@ -14,6 +14,7 @@ class LLM {
 
 class ClientLLMUsage {
     -UUID clientId
+    -LLM model
     -Integer inputTokens
     -Integer outputTokens
     -Date date
@@ -37,7 +38,21 @@ enum LLMIOValue {
     VIDEO
 }
 
+class ImageQuality {
+    -String value
+    -Boolean validate(String quality)
+    {static}+ImageQuality create(String quality)
+}
+
 '=== ASSOCIATIONS ===
-LLM "1" -- "..*" ClientLLMUsage
+LLM "1" -- "..*" ClientLLMUsage: as model
+
+'=== EXTERNAL REFERENCES ===
+class Client {
+    <<external>>
+    +UUID id
+}
+
+ClientLLMUsage ..> Client : referenced by clientId
 
 @enduml

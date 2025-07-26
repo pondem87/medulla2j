@@ -29,12 +29,6 @@ class PhoneNumber {
     {static}+PhoneNumber create(String phoneNumber)
 }
 
-class ImageQuality {
-    -String value
-    -Boolean validate(String quality)
-    {static}+ImageQuality create(String quality)
-}
-
 '=== SERVICES ===
 class ChatbotService {
     +getConversation(UUID clientId)
@@ -53,5 +47,14 @@ Conversation "1" -- "..*" Message
 
 ChatbotService ..> Client : uses
 ChatbotService ..> Conversation : creates/retrieves
+
+'=== EXTERNAL REFERENCES ===
+
+class LLM {
+    <<external>>
+    +UUID id
+}
+
+ClientPreferences ..> LLM : referenced by modelId
 
 @enduml
