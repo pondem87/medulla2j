@@ -10,7 +10,16 @@ class LLM {
     -LLMIOMode[] outputModes
 }
 
+class DailyModelAggregate {
+    -LLM model
+    -Integer inputTokens
+    -Integer outputTokens
+    -Date date
+}
 
+note right of DailyModelAggregate::date
+Only one usage entry per client per date.
+end note
 
 class ClientLLMUsage {
     -UUID clientId
@@ -46,6 +55,7 @@ class ImageQuality {
 
 '=== ASSOCIATIONS ===
 LLM "1" -- "..*" ClientLLMUsage: as model
+LLM "1" -- "..*" DailyModelAggregate: as model
 
 '=== EXTERNAL REFERENCES ===
 class Client {

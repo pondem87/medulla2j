@@ -1,0 +1,81 @@
+@startuml
+
+'=== ENTITIES ===
+class User {
+    -Email email
+    -String passwordHash
+}
+
+class Message {
+    -UUID recipientId
+    -Campaign campaign
+    -MessageStatus status
+    -Instant timeCreated
+    -Instant timeLastUpdated
+    -String trackingId
+    -String phoneNumber
+}
+
+note right of Message::trackingId
+stores the wamid to track
+message status updates
+end note
+
+class Campaign {
+    -WhatsAppTemplate template
+    -String messageContent
+    -Instant timeCreated
+    -CampaignType type
+}
+
+class WhatsAppTemplate {
+    -String templateName
+    -String templateId
+}
+
+'=== VALUE OBJECTS ===
+class MessageStatus {
+    -MessageStatusVariant value
+    -MessageStatusVariant validate(String status)
+    {static}+MessageStatus create(String status)
+}
+
+enum MessageStatusVariant {
+    DISPATCHED
+    DISPATCH_FAILED
+    NOT_SENT
+    SENT
+    DELIVERED
+    FAILED
+}
+
+class CampaignType {
+    -CampaignTypeVariant value
+    -CampaignTypeVariant validate(String variant)
+    {static}+CampaignType create(String variant)
+}
+
+enum CampaignTypeVariant {
+    TEMPLATE_BASED
+    FREE_FORM
+}
+
+class Email {
+    -String value
+    -String validate(String email)
+    +Email create(String email)
+}
+
+'=== ASSOCIATIONS ===
+Campaign "1" -- "0..1" WhatsAppTemplate : as template
+Campaign "1" -- "..*" Message
+
+'=== EXTERNAL REFERENCES ===
+class Client {
+    <<external>>
+    -UUID id
+}
+
+Message ..> Client : referenced by recipientId
+
+@enduml

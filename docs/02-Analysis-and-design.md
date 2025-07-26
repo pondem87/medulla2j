@@ -35,5 +35,5 @@ Domain identification
 
 ### Administration
 
-- Entities:
-- Value objects:
+- Entities: user, whatsapp template, campaign, message
+- Value objects: campaign type, message status

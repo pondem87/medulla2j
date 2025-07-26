@@ -5,19 +5,25 @@ title chatbot domain
 class Client {
     -PhoneNumber phoneNumber
     -Instant timeCreated
+    -Boolean promotionsOptIn
 }
 
 class Conversation {
+    -Client client
     -Instant timeCreated
+    -Instant timeLastUpdated
 }
 
 class Message {
+    -Conversation conversation
     -String messageContent
-    -Instant timeCreated
+    -Instant timeCreate
+    -MessageDirection direction
 }
 
 '=== Entities ===
 class ClientPreferences {
+    -Client client
     -UUID modelId
     -ImageQuality imageQuality
 }
@@ -27,6 +33,17 @@ class PhoneNumber {
     -String value
     -Boolean validate(String phoneNumber)
     {static}+PhoneNumber create(String phoneNumber)
+}
+
+class MessageDirection {
+    -Direction value
+    -Direction validate(String direction)
+    +MessageDirection create(String direction)
+}
+
+enum Direction {
+    INCOMING
+    OUTGOING
 }
 
 '=== SERVICES ===
@@ -41,12 +58,9 @@ or the current one has expired
 end note
 
 '=== ASSOCIATIONS ===
-Client "1" -- "..*" Conversation
-Client "1" -- "1" ClientPreferences
-Conversation "1" -- "..*" Message
-
-ChatbotService ..> Client : uses
-ChatbotService ..> Conversation : creates/retrieves
+Client "1" -- "..*" Conversation: as client
+Client "1" -- "1" ClientPreferences: as client
+Conversation "1" -- "..*" Message: as conversation
 
 '=== EXTERNAL REFERENCES ===
 
