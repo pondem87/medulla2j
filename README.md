@@ -12,7 +12,7 @@ Here is a guide through the documentation
 📚 Docs:
 - [Overview](docs/00-Overview.md)
 - [Requirements](docs/01-Requirements.md)
-- [Analysis and design](docs/02-Analysis-and-desing.md)
+- [Analysis and design](docs/02-Analysis-and-design.md)
 - [Architecture](docs/03-Architecture.md)
 - [Tech Stack](docs/04-Tech-Stack.md)
 - [Design Decisions](docs/05-Decisions.md)

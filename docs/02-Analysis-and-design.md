@@ -37,3 +37,6 @@ Domain identification
 
 - Entities: user, whatsapp template, campaign, message
 - Value objects: campaign type, message status
+
+![diagram](uml/domain-modelling/images/administration_domain.png)
+* [puml file](uml/domain-modelling/administration_domain.puml)
