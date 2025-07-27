@@ -21,12 +21,23 @@ class Message {
     -MessageDirection direction
 }
 
-'=== Entities ===
 class ClientPreferences {
     -Client client
     -UUID modelId
     -ImageQuality imageQuality
 }
+
+class DailyActivity {
+    -Client client
+    -Integer totalMessagesSent
+    -Integer totalMessagesReceived
+    -Date date
+}
+
+note right of DailyActivity::date
+one date per client
+per day only
+end note
 
 '=== VALUE OBJECTS ===
 class PhoneNumber {
@@ -61,6 +72,7 @@ end note
 Client "1" -- "..*" Conversation: as client
 Client "1" -- "1" ClientPreferences: as client
 Conversation "1" -- "..*" Message: as conversation
+Client "1" --- "..*" DailyActivity: as client
 
 '=== EXTERNAL REFERENCES ===
 

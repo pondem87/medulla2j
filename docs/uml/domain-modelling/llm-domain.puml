@@ -18,7 +18,8 @@ class DailyModelAggregate {
 }
 
 note right of DailyModelAggregate::date
-Only one usage entry per client per date.
+Only one aggregate
+per model per date.
 end note
 
 class ClientLLMUsage {
@@ -30,7 +31,8 @@ class ClientLLMUsage {
 }
 
 note right of ClientLLMUsage::date
-Only one usage entry per client per date.
+Only one usage entry per client
+per model per date.
 end note
 
 '=== VALUE OBJECTS ===
